@@ -12,25 +12,39 @@ public abstract class GameEngine extends Application {
 
     private Pane pane;
     private List<Entity> entities = new ArrayList<>();
+    protected GameTime time;
+    protected UserInputHandler userInputHandler;
 
-    public void onStart(){}
-    public void onUpdate(){}
+    protected void onStart(){}
+    protected void onUpdateStart(){}
+    protected void onUpdateFinish(){}
+
+    public void addEntity(Entity entity)
+    {
+        pane.getChildren().add(entity.getVisuals());
+        entities.add(entity);
+    }
+
+    public void removeEntity(Entity entity)
+    {
+        pane.getChildren().remove(entity.getVisuals());
+        entities.remove(entity);
+    }
 
     void calculateFrame()
     {
-        // Update objects
+        onUpdateStart();
+
+        // Update and draw objects
         for(Entity e: entities)
         {
             e.update();
-        }
-
-        onUpdate();
-
-        // Draw objects at resulting locations
-        for(Entity e: entities){
             e.draw();
         }
+
+        onUpdateFinish();
     }
+
 
     /**
      * Launches the Java FX window
@@ -42,13 +56,17 @@ public abstract class GameEngine extends Application {
         pane = new Pane();
 
         Scene scene = new Scene(pane, getWindowWidth(), getWindowHeight());
+        userInputHandler = new UserInputHandler(scene);
+        time = new GameTime(this);
 
         onStart();
 
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        time.play();
     }
 
-    abstract protected int getWindowWidth();
-    abstract protected int getWindowHeight();
+    abstract public int getWindowWidth();
+    abstract public int getWindowHeight();
 }

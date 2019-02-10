@@ -5,12 +5,19 @@ import GameEngine.GameEngine;
 public class Game extends GameEngine {
 
     @Override
-    protected int getWindowWidth() {
-        return 1000;
+    public void onStart()
+    {
+        Player p = new Player(50, 50, userInputHandler);
+        addEntity(p);
     }
 
     @Override
-    protected int getWindowHeight() {
-        return 400;
+    public int getWindowWidth() {
+        return 800;
+    }
+
+    @Override
+    public int getWindowHeight() {
+        return 800;
     }
 }

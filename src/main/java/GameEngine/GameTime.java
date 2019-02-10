@@ -12,7 +12,7 @@ public class GameTime {
     private Timeline time;
     private boolean playing = false;
 
-    public GameTime(GameEngine game){
+    GameTime(GameEngine game){
         time = new Timeline();
         time.setCycleCount(Animation.INDEFINITE);
         KeyFrame keyFrame = new KeyFrame(Duration.millis(1000L / Settings.getFramerate()), new EventHandler<ActionEvent>() {
