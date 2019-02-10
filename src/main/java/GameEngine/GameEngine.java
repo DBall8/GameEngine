@@ -12,6 +12,7 @@ public abstract class GameEngine extends Application {
 
     private Pane pane;
     private List<Entity> entities = new ArrayList<>();
+    protected Settings settings = new Settings();
     protected GameTime time;
     protected UserInputHandler userInputHandler;
 
@@ -57,13 +58,13 @@ public abstract class GameEngine extends Application {
 
         Scene scene = new Scene(pane, getWindowWidth(), getWindowHeight());
         userInputHandler = new UserInputHandler(scene);
-        time = new GameTime(this);
 
         onStart();
 
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        time = new GameTime(this);
         time.play();
     }
 
