@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine.userInput;
 
 import javafx.scene.input.KeyCode;
 

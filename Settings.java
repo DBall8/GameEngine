@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 public class Settings {
 

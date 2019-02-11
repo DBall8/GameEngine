@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;

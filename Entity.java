@@ -1,4 +1,4 @@
-package GameEngine;
+package gameEngine;
 
 import javafx.scene.Group;
 import javafx.scene.shape.Shape;

@@ -1,7 +1,9 @@
-package GameEngine;
+package gameEngine;
 
+import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
