@@ -15,7 +15,7 @@ public class GameTime {
     GameTime(GameEngine game){
         time = new Timeline();
         time.setCycleCount(Animation.INDEFINITE);
-        KeyFrame keyFrame = new KeyFrame(Duration.millis(1000L / game.settings.getFramesPerSecond()), new EventHandler<ActionEvent>() {
+        KeyFrame keyFrame = new KeyFrame(Duration.millis(1000L / game.getFramesPerSecond()), new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 // update positions
