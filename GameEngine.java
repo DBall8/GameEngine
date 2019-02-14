@@ -21,7 +21,7 @@ public abstract class GameEngine extends Application {
     private List<Entity> entities = new ArrayList<>();
     private Settings settings = new Settings();
     private GameTime time;
-    private UserInputHandler userInputHandler;
+    protected UserInputHandler userInputHandler = null;
 
     void calculateFrame()
     {
@@ -86,16 +86,6 @@ public abstract class GameEngine extends Application {
     public void pause()
     {
         time.pause();
-    }
-
-    public UserInputHandler getUserInputHandler()
-    {
-        if(userInputHandler == null)
-        {
-            System.err.println("ERROR: Input handler has yet to be initialized.");
-            System.err.println(" (If you are attempting to use getUserInputHandler from within onInitiaze(), please use it in onStart() instead.)");
-        }
-        return userInputHandler;
     }
 
     public void setWindowWidth(int windowWidth)

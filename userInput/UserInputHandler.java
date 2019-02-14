@@ -76,7 +76,7 @@ public class UserInputHandler {
         return mouseBinding;
     }
 
-    public MouseBinding createMouseListenerBinding()
+    public MouseBinding createMouseListener()
     {
         mouseBinding = new MouseBinding();
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
