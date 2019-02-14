@@ -4,6 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 
 import java.util.ArrayList;
@@ -12,126 +13,140 @@ import java.util.List;
 
 public class UserInputHandler {
     Scene scene;
-    HashMap<KeyCode, List<KeyBinding>> keyBindings = new HashMap<>();
-    MouseBinding mouseBinding;
+    HashMap<KeyCode, KeyBinding> keyBindings = new HashMap<>();
+    HashMap<MouseButton, MouseBinding> mouseBindings = new HashMap<>();
+
+    private boolean keyListenerInitialized = false;
+    private boolean mouseClickListenerInitialized = false;
+    private boolean mouseMoveListenerInitialized = false;
 
     public UserInputHandler(Scene scene)
     {
         this.scene = scene;
+    }
 
+    public KeyBinding createKeyBinding(KeyCode key)
+    {
+        if(keyBindings.containsKey(key)) return keyBindings.get(key);
+
+        // Set up key listener if not set up yet
+        if(!keyListenerInitialized) initializeKeyListener();
+
+        KeyBinding binding = new KeyBinding(key);
+        keyBindings.put(key, binding);
+
+        return binding;
+    }
+
+    public MouseBinding createMouseClickBinding(MouseButton button)
+    {
+        // If mouse binding already exists, return it
+        if(mouseBindings.containsKey(button)) return mouseBindings.get(button);
+
+        // Set up mouse click listeners if not set up yet
+        if(!mouseClickListenerInitialized) initializeMouseClickListener();
+
+        // Otherwise, make a new binding and set up listeners
+        MouseBinding mouseBinding = new MouseBinding(button);
+        mouseBindings.put(button, mouseBinding);
+
+        return mouseBinding;
+    }
+
+    public MouseBinding createMouseListener(MouseButton button)
+    {
+        // If mouse binding already exists, return it
+        if(mouseBindings.containsKey(button)) return mouseBindings.get(button);
+
+        // Set up mouse click listeners if not set up yet
+        if(!mouseClickListenerInitialized) initializeMouseClickListener();
+
+        // Set up mouse move listeners if not set up yet
+        if(!mouseMoveListenerInitialized) initializeMouseMoveListener();
+
+        // Otherwise, make a new binding and set up listeners
+        MouseBinding mouseBinding = new MouseBinding(button);
+        mouseBindings.put(button, mouseBinding);
+
+        return mouseBinding;
+    }
+
+    private void initializeKeyListener()
+    {
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                keyDown(event);
+            public void handle(KeyEvent keyEvent) {
+                if(keyBindings.containsKey(keyEvent.getCode()))
+                {
+                    KeyBinding keyBinding = keyBindings.get(keyEvent.getCode());
+                    if(!keyBinding.isPressed()) keyBinding.setPressed(true);
+                }
             }
         });
 
         scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
-            public void handle(KeyEvent event) {
-                keyUp(event);
+            public void handle(KeyEvent keyEvent) {
+                if(keyBindings.containsKey(keyEvent.getCode()))
+                {
+                    keyBindings.get(keyEvent.getCode()).setPressed(false);
+                }
             }
         });
+
+        keyListenerInitialized = true;
     }
-
-    public KeyBinding createKeyBinding(KeyCode key)
+    private void initializeMouseClickListener()
     {
-        KeyBinding binding = new KeyBinding(key);
-
-        if(keyBindings.containsKey(key))
-        {
-            keyBindings.get(key).add(binding);
-        }
-        else
-        {
-            List<KeyBinding> bindingList = new ArrayList<KeyBinding>();
-            bindingList.add(binding);
-            keyBindings.put(key, bindingList);
-        }
-
-        return binding;
-    }
-
-    public MouseBinding createMouseClickBinding()
-    {
-        mouseBinding = new MouseBinding();
-
         scene.setOnMousePressed(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                if(!mouseBinding.isPressed()){
-                    mouseBinding.setMousePosition((float)event.getSceneX(), (float)event.getSceneY());
-                    mouseBinding.setPressed(true);
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseBindings.containsKey(mouseEvent.getButton()))
+                {
+                    MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
+                    if(!mouseBinding.isPressed()){
+                        mouseBinding.setMousePosition((float)mouseEvent.getSceneX(), (float)mouseEvent.getSceneY());
+                        mouseBinding.setPressed(true);
+                    }
                 }
             }
         });
 
         scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                mouseBinding.setPressed(false);
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseBindings.containsKey(mouseEvent.getButton())) {
+                    mouseBindings.get(mouseEvent.getButton()).setPressed(false);
+                }
             }
         });
 
-        return mouseBinding;
+        mouseClickListenerInitialized = true;
     }
 
-    public MouseBinding createMouseListener()
+    private void initializeMouseMoveListener()
     {
-        mouseBinding = new MouseBinding();
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                mouseBinding.setMousePosition((float)event.getSceneX(), (float)event.getSceneY());
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseBindings.containsKey(mouseEvent.getButton())) {
+                    MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
+                    mouseBinding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
+                }
             }
         });
 
         scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
-            public void handle(MouseEvent event) {
-                mouseBinding.setMousePosition((float)event.getSceneX(), (float)event.getSceneY());
-            }
-        });
-
-        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if(!mouseBinding.isPressed()){
-                    mouseBinding.setMousePosition((float)event.getSceneX(), (float)event.getSceneY());
-                    mouseBinding.setPressed(true);
+            public void handle(MouseEvent mouseEvent) {
+                if(mouseBindings.containsKey(mouseEvent.getButton())) {
+                    MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
+                    mouseBinding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
                 }
             }
         });
 
-        scene.setOnMouseReleased(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                mouseBinding.setPressed(false);
-            }
-        });
-
-        return mouseBinding;
+        mouseMoveListenerInitialized = true;
     }
 
-    private void keyDown(KeyEvent keyEvent)
-    {
-        if(keyBindings.containsKey(keyEvent.getCode()))
-        {
-            for(KeyBinding binding: keyBindings.get(keyEvent.getCode()))
-            {
-                if(!binding.isPressed()) binding.setPressed(true);
-            }
-        }
-    }
-
-    private void keyUp(KeyEvent keyEvent)
-    {
-        if(keyBindings.containsKey(keyEvent.getCode()))
-        {
-            for(KeyBinding binding: keyBindings.get(keyEvent.getCode()))
-            {
-                binding.setPressed(false);
-            }
-        }
-    }
 }

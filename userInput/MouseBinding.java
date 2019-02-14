@@ -1,16 +1,18 @@
 package gameEngine.userInput;
 
-public class MouseBinding {
+import javafx.scene.input.MouseButton;
+
+public class MouseBinding extends InputBinding {
     private float mouseX = 0;
     private float mouseY = 0;
-    private boolean isPressed = false;
     private boolean isClicked = false;
+    private MouseButton button;
 
-    MouseBinding(){}
-
-    public boolean isPressed() {
-        return isPressed;
+    MouseBinding(MouseButton button)
+    {
+        this.button = button;
     }
+
     public boolean isClicked() {
         return isClicked;
     }
@@ -20,9 +22,11 @@ public class MouseBinding {
     }
     public float getMouseX(){ return mouseX; }
     public float getMouseY(){ return mouseY; }
+    public MouseButton getButton(){ return button; }
 
+    @Override
     void setPressed(boolean isPressed) {
-        this.isPressed = isPressed;
+        super.setPressed(isPressed);
         this.isClicked = isPressed;
     }
     void setMousePosition(float x, float y)
