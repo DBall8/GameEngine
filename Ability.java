@@ -43,7 +43,7 @@ public class Ability {
             }
         };
 
-        callback.run();
+        callback.run(null);
         isReady = false;
         timer.schedule(activeTask, (int)(cooldown * 1000));
     }

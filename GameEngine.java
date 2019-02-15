@@ -1,5 +1,6 @@
 package gameEngine;
 
+import gameEngine.callback.Callback;
 import gameEngine.userInput.KeyBinding;
 import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class GameEngine extends Application {
@@ -18,13 +20,19 @@ public abstract class GameEngine extends Application {
     private final static int DEFAULT_HEIGHT = 800;
 
     private Pane pane;
-    private List<Entity> entities = new ArrayList<>();
     private Settings settings = new Settings();
     private GameTime time;
     protected UserInputHandler userInputHandler = null;
 
+    private List<Entity> entities = new ArrayList<>();
+    private List<Entity> additionList = new LinkedList<>();
+    private List<Entity> removalList = new LinkedList<>();
+
     void calculateFrame()
     {
+        // Do any removals or additions to the entity list
+        updateEntityList();
+
         onUpdateStart();
 
         // Update and draw objects
@@ -61,21 +69,55 @@ public abstract class GameEngine extends Application {
         time.play();
     }
 
-    protected void onInitialize(){}
-    protected void onStart(){}
-    protected void onUpdateStart(){}
-    protected void onUpdateFinish(){}
-
-    public void addEntity(Entity entity)
+    private void add(Entity entity)
     {
         pane.getChildren().add(entity.getVisuals());
         entities.add(entity);
     }
 
-    public void removeEntity(Entity entity)
+    private void remove(Entity entity)
     {
         pane.getChildren().remove(entity.getVisuals());
         entities.remove(entity);
+    }
+
+    synchronized private void updateEntityList()
+    {
+        for(Entity entity: additionList)
+        {
+            add(entity);
+        }
+        additionList.clear();
+
+        for(Entity entity: removalList)
+        {
+            remove(entity);
+        }
+        removalList.clear();
+    }
+
+    protected void onInitialize(){}
+    protected void onStart(){}
+    protected void onUpdateStart(){}
+    protected void onUpdateFinish(){}
+
+    // Could use if desired
+//    public void forEachEntity(Callback<Entity> callback)
+//    {
+//        for(Entity entity: entities)
+//        {
+//            callback.run(entity);
+//        }
+//    }
+
+    public synchronized void addEntity(Entity entity)
+    {
+        additionList.add(entity);
+    }
+
+    public synchronized void removeEntity(Entity entity)
+    {
+        removalList.add(entity);
     }
 
     public void play()
