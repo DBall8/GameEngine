@@ -1,17 +1,21 @@
 package gameEngine;
 
+import gameEngine.callback.Callback;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class AbilityCooldown {
+public class Ability {
     private TimerTask activeTask = null;
     private float cooldown;
+    private Callback callback;
     private boolean isReady;
 
-    public AbilityCooldown(float cooldownInSeconds)
+    public Ability(float cooldownInSeconds, Callback callback)
     {
         isReady = true;
         this.cooldown = cooldownInSeconds;
+        this.callback = callback;
     }
 
     public boolean isOnCooldown()
@@ -39,6 +43,7 @@ public class AbilityCooldown {
             }
         };
 
+        callback.run();
         isReady = false;
         timer.schedule(activeTask, (int)(cooldown * 1000));
     }
