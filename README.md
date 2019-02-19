@@ -3,16 +3,16 @@
 This module allows for the quick easy creation of a simple game using Java FX.
 
 ## Table of Contents
-1. [Overview and Launching](#1.-Overview-and-Launching)\
-  1a. [Method #1](#1b.-Method-#1)\
-  1b. [Method #2](#1c.-Method-#2)
-2. [Included Classes](#2.-Included-Classes)\
-  2a. [Entity](#2a.-Entity)\
-  2b. [GameEngine](#2b.-GameEngine)\
-  2c. [UserInputHandler](#2c.-UserInputHandler)\
-  2d. [KeyBinding](#2d.-KeyBinding)\
-  2e. [MouseBinding](#2e.-MouseBinding)\
-  2f. [Ability](#2f.-Ability)
+1. [Overview and Launching](#1-Overview-and-Launching)\
+  1a. [Method #1](#1b-Method-#1)\
+  1b. [Method #2](#1c-Method-#2)
+2. [Included Classes](#2-Included-Classes)\
+  2a. [Entity](#2a-Entity)\
+  2b. [GameEngine](#2b-GameEngine)\
+  2c. [UserInputHandler](#2c-UserInputHandler)\
+  2d. [KeyBinding](#2d-KeyBinding)\
+  2e. [MouseBinding](#2e-MouseBinding)\
+  2f. [Ability](#2f-Ability)
 
 ## 1. Overview and Launching ##
 The basic concept of the GameEngine is that you will be creating a class that extends GameEngine, and then you will
