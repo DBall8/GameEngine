@@ -4,8 +4,8 @@ This module allows for the quick easy creation of a simple game using Java FX.
 
 ## Table of Contents
 1. [Overview and Launching](#1-Overview-and-Launching)\
-  1a. [Method #1](#1a-Method-1)\
-  1b. [Method #2](#1b-Method-2)
+  1a. [Launching Method #1](#1a-Launching-Method-1)\
+  1b. [Launching Method #2](#1b-Launching-Method-2)
 2. [Included Classes](#2-Included-Classes)\
   2a. [Entity](#2a-Entity)\
   2b. [GameEngine](#2b-GameEngine)\
@@ -49,7 +49,7 @@ public class YourGame extends GameEngine {
 ```
 There are two basic ways to launch an instance of your class that extends GameEngine.
 
-### 1a. Method #1 ###
+### 1a. Launching Method #1 ###
  1. Create a class that extends from GameEngine
  2. In your main method, call `Application.launch(YourClass.class)`
  
@@ -60,7 +60,7 @@ There are two basic ways to launch an instance of your class that extends GameEn
  }
  ```
 
- ## 1b. Method #2 ##
+ ## 1b. Launching Method #2 ##
  1. Create a class that extends from GameEngine
  2. Set your project to use your new class as the Main class (GameEngine inherits from
   Application which can be launched)
