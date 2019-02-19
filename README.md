@@ -4,8 +4,8 @@ This module allows for the quick easy creation of a simple game using Java FX.
 
 ## Table of Contents
 1. [Overview and Launching](#1-Overview-and-Launching)\
-  1a. [Method #1](#1b-Method-#1)\
-  1b. [Method #2](#1c-Method-#2)
+  1a. [Method #1](#1b-Method-1)\
+  1b. [Method #2](#1c-Method-2)
 2. [Included Classes](#2-Included-Classes)\
   2a. [Entity](#2a-Entity)\
   2b. [GameEngine](#2b-GameEngine)\
