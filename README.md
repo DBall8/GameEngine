@@ -3,19 +3,18 @@
 This module allows for the quick easy creation of a simple game using Java FX.
 
 ## Table of Contents
-1. [1. To Create and Launch]To Create and Launch
-1a. Method #1
-1b. Method #2
-2. Included Classes
-2a. Entity
-2b. GameEngine
-2c. UserInputHandler
-2d. KeyBinding
-2e. MouseBinding
-2f. Ability
+1. [To Create and Launch](#1-To-Create-and-Launch)
+  1a. [Method #1](#Method-#1)
+  1b. [Method #2](#Method-#2)
+2. [Included Classes](#Included-Classes)
+  2a. [Entity](#Entity)
+  2b. [GameEngine](#GameEngine)
+  2c. [UserInputHandler](#UserInputHandler)
+  2d. [KeyBinding](#KeyBinding)
+  2e. [MouseBinding](#MouseBinding)
+  2f. [Ability](#Ability)
 
-## 1. To Create and Launch
-
+## 1. To Create and Launch ##
 There are two basic ways to set up an instance of a GameEngine
 
 ### 1a. Method #1
