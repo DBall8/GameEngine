@@ -2,6 +2,18 @@
 
 This module allows for the quick easy creation of a simple game using Java FX.
 
+## Table of Contents
+1. [1. To Create and Launch]To Create and Launch
+1a. Method #1
+1b. Method #2
+2. Included Classes
+2a. Entity
+2b. GameEngine
+2c. UserInputHandler
+2d. KeyBinding
+2e. MouseBinding
+2f. Ability
+
 ## 1. To Create and Launch
 
 There are two basic ways to set up an instance of a GameEngine
@@ -153,3 +165,34 @@ public float getMouseY();
 NOTE -- MouseBindings made from createMouseClickBinding() will only update mouse x and mouse y when clicked, but MouseBindings
     made with createMouseListener() will update the x and y coordinate whenever the mouse moves.
 
+## 2f. Ability
+The ability class allows you to give it a callback function that will be called whenever the ability is used, as long as
+the ability is off of cooldown.
+
+### Useful Methods
+```
+public Ability(float cooldownInSeconds, Callback callback)
+public void use();
+public boolean isOnCooldown();
+```
+
+1. Constructor -- An ability is constructed from a cooldown time in seconds, and a Callback object. The callback object
+    functions as simply a object with a single method "run" that must be overridden with the code that you would like to
+    run when the ability is used. The cooldown time is the time (in seconds) that must be waited after a successful use 
+    of the ability before the ability may be used again.
+2. use() -- This method attempts to use the ability. The ability will be used only if the cooldown period since the last
+    use has passed. If the ability is successfully used, it will call the callback function given in the constructor.
+3. isOnCooldown() -- Returns true if the cooldown period since the last ability use has not passed.
+
+### Example of construction
+The following is an example of how to create an ability with a cooldown of 2 seconds that will simply print a message
+when used.
+```
+Ability exampleAbility = new Ability(2, new Callback<Void>() {
+    @Override
+    public void run(Void parameter) {
+        // Code run on ability usage here
+        System.out.println("USING ABILITY");
+    }
+});
+```
