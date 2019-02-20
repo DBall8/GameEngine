@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserInputHandler {
     Scene scene;
@@ -129,9 +130,9 @@ public class UserInputHandler {
         scene.setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(mouseBindings.containsKey(mouseEvent.getButton())) {
-                    MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
-                    mouseBinding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
+                for(Map.Entry<MouseButton, MouseBinding> entry: mouseBindings.entrySet())
+                {
+                    entry.getValue().setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
                 }
             }
         });
@@ -139,9 +140,9 @@ public class UserInputHandler {
         scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
-                if(mouseBindings.containsKey(mouseEvent.getButton())) {
-                    MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
-                    mouseBinding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
+                for(Map.Entry<MouseButton, MouseBinding> entry: mouseBindings.entrySet())
+                {
+                    entry.getValue().setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
                 }
             }
         });
