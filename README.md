@@ -20,6 +20,7 @@ override a couple methods to give yourself control over the game.
 
 Example:
 ```
+import gameEngine.GameEngine;
 public class YourGame extends GameEngine {
 
     @Override
