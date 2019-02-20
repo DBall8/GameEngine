@@ -5,12 +5,20 @@ import gameEngine.callback.Callback;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class for creating a simple ability
+ */
 public class Ability {
     private TimerTask activeTask = null;
     private float cooldown;
     private Callback callback;
     private boolean isReady;
 
+    /**
+     * Constructor
+     * @param cooldownInSeconds cooldown time in seconds
+     * @param callback function to call when successfully used
+     */
     public Ability(float cooldownInSeconds, Callback callback)
     {
         isReady = true;
@@ -18,11 +26,18 @@ public class Ability {
         this.callback = callback;
     }
 
+    /**
+     * Returns true when the cooldown period since the ability's last use has NOT passed
+     * @return
+     */
     public boolean isOnCooldown()
     {
         return !isReady;
     }
 
+    /**
+     * If if the cooldown period since last use has passed, uses the ability. Otherwise, does nothing
+     */
     public void use()
     {
         // If still on cooldown, don't use
@@ -34,6 +49,7 @@ public class Ability {
             activeTask.cancel();
         }
 
+        // Set up cooldown timer
         Timer timer = new Timer();
         activeTask = new TimerTask() {
             @Override
@@ -43,8 +59,10 @@ public class Ability {
             }
         };
 
+        // Use ability callback
         callback.run(null);
         isReady = false;
+        // Start cooldown timer
         timer.schedule(activeTask, (int)(cooldown * 1000));
     }
 }

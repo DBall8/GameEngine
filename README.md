@@ -143,7 +143,12 @@ To allow for easy control of various aspects of the game, some instances of clas
 These member variables are instantiated after initialization, so can be used anywhere except in onInitialize().
 ```
 protected UserInputHandler userInputHandler;
+protected Scene scene;
 ```
+
+1. userInputHandler -- This is an instance of a UserInputHandler (see below) that can be used to create easy key bindings.
+2. scene -- This is the instance of a JavaFX Scene that the game window runs in. The scene can be used to do anything to
+    to the game window the user would like that is not provided by this GameEngine module.
 
 ## 2c. UserInputHandler ##
 This is a class for creating bindings for user inputs. This class has 3 main methods to use:
@@ -159,7 +164,7 @@ public MouseBinding createMouseListener();
     that can be used to see if the mouse is current being pressed. (See below for details on the MouseBinding class)
 3. createMouseListener() -- This method returns an instance of the MouseBinding class that can be used to detect a mouse
     click, as well as detect mouse movement. (See below for details on the MouseBinding class)
-    
+
 ## 2d. KeyBinding ##
 The KeyBinding class can only be created through the use of `KeyBinding userInputHandler.createKeyBinding(KeyCode key)`.
 ### Useful Methods ###

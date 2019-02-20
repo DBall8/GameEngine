@@ -18,6 +18,7 @@ public abstract class GameEngine extends Application {
     private Pane pane; // Pane for adding all visuals
     private Settings settings = new Settings(); // contains all settings for the engine
     private GameTime time; // controls triggering of frames updates
+    protected Scene scene; // Scene that the game is present in
     protected UserInputHandler userInputHandler = null; // creates bindings between inputs and actions
 
     private List<Entity> entities = new ArrayList<>(); // All entities to be drawn
@@ -59,7 +60,7 @@ public abstract class GameEngine extends Application {
 
         // Set up pane and scene
         pane = new Pane();
-        Scene scene = new Scene(pane, settings.getWindowWidth(), settings.getWindowHeight());
+        scene = new Scene(pane, settings.getWindowWidth(), settings.getWindowHeight());
 
         // Create user input handler
         userInputHandler = new UserInputHandler(scene);
