@@ -49,6 +49,7 @@ public class Ability {
         if(activeTask != null)
         {
             activeTask.cancel();
+            timer.purge();
         }
 
         // Set up cooldown timer
