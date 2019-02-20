@@ -86,11 +86,9 @@ public class UserInputHandler {
     public MouseBinding createMouseListener(MouseButton button)
     {
         // If mouse binding already exists, return it
-        if(mouseBindings.containsKey(button))
+        if(mouseBindings.containsKey(button) && mouseBindings.get(button).trackMovement)
         {
-            MouseBinding binding = mouseBindings.get(button);
-            binding.trackMovement = true;
-            return binding;
+            return mouseBindings.get(button);
         }
 
         // Set up mouse click listeners if not set up yet

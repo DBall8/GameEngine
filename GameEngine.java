@@ -4,6 +4,8 @@ import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ public abstract class GameEngine extends Application {
     private List<Entity> additionList = new LinkedList<>(); // list for entities to add on next frame
     private List<Entity> removalList = new LinkedList<>(); // list for entities to remove on next frame
 
+    private Text frameRateText = null;
+
     /**
      * Calculates the state of every entity and then draws a new frame
      */
@@ -45,6 +49,12 @@ public abstract class GameEngine extends Application {
 
         // Run method that the user can override
         onUpdateFinish();
+
+        if(settings.isShowFrameRate())
+        {
+            int frameRate = (int)time.getFrameRate();
+            frameRateText.setText(Integer.toString(frameRate));
+        }
     }
 
 
@@ -67,6 +77,11 @@ public abstract class GameEngine extends Application {
 
         // Run method that the user can override
         onStart();
+        if(settings.isShowFrameRate())
+        {
+            frameRateText = new Text(settings.getWindowWidth() - 40, 40, "0");
+            pane.getChildren().add(frameRateText);
+        }
 
         // Set up window and show it
         primaryStage.setScene(scene);
@@ -200,5 +215,16 @@ public abstract class GameEngine extends Application {
     public float getFramesPerSecond()
     {
         return settings.getFramesPerSecond();
+    }
+
+    public boolean isFramerateShown() { return settings.isShowFrameRate(); }
+    public void showFramerate(){ settings.setShowFrameRate(true); }
+    public void hideFramerate(){ settings.setShowFrameRate(false); }
+    public void setFrameRateTextColor(Color color)
+    {
+        if(frameRateText != null)
+        {
+            frameRateText.setFill(color);
+        }
     }
 }

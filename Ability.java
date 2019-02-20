@@ -9,6 +9,7 @@ import java.util.TimerTask;
  * Class for creating a simple ability
  */
 public class Ability {
+    Timer timer;
     private TimerTask activeTask = null;
     private float cooldown;
     private Callback callback;
@@ -21,6 +22,7 @@ public class Ability {
      */
     public Ability(float cooldownInSeconds, Callback callback)
     {
+        timer = new Timer(true);
         isReady = true;
         this.cooldown = cooldownInSeconds;
         this.callback = callback;
@@ -50,12 +52,10 @@ public class Ability {
         }
 
         // Set up cooldown timer
-        Timer timer = new Timer();
         activeTask = new TimerTask() {
             @Override
             public void run() {
                 isReady = true;
-                timer.cancel();
             }
         };
 
