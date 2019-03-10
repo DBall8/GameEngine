@@ -2,11 +2,13 @@ package gameEngine;
 
 import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -83,6 +85,14 @@ public abstract class GameEngine extends Application {
             pane.getChildren().add(frameRateText);
         }
 
+        // Set up close event
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent t) {
+                onClose();
+            }
+        });
+
         // Set up window and show it
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -137,6 +147,7 @@ public abstract class GameEngine extends Application {
     protected void onStart(){}
     protected void onUpdateStart(){}
     protected void onUpdateFinish(){}
+    protected void onClose(){}
 
     // Could use if desired
 //    public void forEachEntity(Callback<Entity> callback)
