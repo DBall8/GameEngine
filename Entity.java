@@ -39,6 +39,20 @@ public abstract class Entity {
     }
 
     /**
+     * Methods for removing visuals
+     */
+    protected void removeVisual(Shape visual){ visuals.getChildren().remove(visual);}
+    protected void removeVisual(int i){ visuals.getChildren().remove(i);}
+    protected void removeAllVisuals(){ visuals.getChildren().clear();}
+
+    /**
+     * Sets the x and y locations of the entity
+     * @param x
+     * @param y
+     */
+    protected void setLocation(float x, float y) { this.x = x; this.y = y; }
+
+    /**
      * Method to override for updating the entity's state each frame before drawing
      */
     public abstract void update();
