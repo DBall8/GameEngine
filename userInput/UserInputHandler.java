@@ -1,5 +1,6 @@
 package gameEngine.userInput;
 
+import gameEngine.Camera;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -19,6 +20,7 @@ import java.util.Map;
  */
 public class UserInputHandler {
     Scene scene; // JavaFX scene the game is running in
+    Camera camera; // Camera for adjusting mouse position into game engine coordinates
     HashMap<KeyCode, KeyBinding> keyBindings = new HashMap<>(); // Map of keyboard keys to KeyBindings
     HashMap<MouseButton, MouseBinding> mouseBindings = new HashMap<>(); // Map of mouse buttons to MouseBindings
 
@@ -32,9 +34,10 @@ public class UserInputHandler {
      * Constructor
      * @param scene JavaFX scene the game is run in
      */
-    public UserInputHandler(Scene scene)
+    public UserInputHandler(Scene scene, Camera camera)
     {
         this.scene = scene;
+        this.camera = camera;
     }
 
     /**
@@ -145,7 +148,8 @@ public class UserInputHandler {
                 {
                     MouseBinding mouseBinding = mouseBindings.get(mouseEvent.getButton());
                     if(!mouseBinding.isPressed()){
-                        mouseBinding.setMousePosition((float)mouseEvent.getSceneX(), (float)mouseEvent.getSceneY());
+                        mouseBinding.setMousePosition((float)mouseEvent.getSceneX() - camera.getAdjustmentX(),
+                                                         (float)mouseEvent.getSceneY() - camera.getAdjustmentY());
                         mouseBinding.setPressed(true);
                     }
                 }
@@ -176,7 +180,8 @@ public class UserInputHandler {
                 {
                     MouseBinding binding = entry.getValue();
                     if(binding.trackMovement) {
-                        binding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
+                        binding.setMousePosition((float)mouseEvent.getSceneX() - camera.getAdjustmentX(),
+                                                 (float)mouseEvent.getSceneY() - camera.getAdjustmentY());
                     }
                 }
             }
@@ -189,7 +194,8 @@ public class UserInputHandler {
                 {
                     MouseBinding binding = entry.getValue();
                     if(binding.trackMovement) {
-                        binding.setMousePosition((float) mouseEvent.getSceneX(), (float) mouseEvent.getSceneY());
+                        binding.setMousePosition((float)mouseEvent.getSceneX() - camera.getAdjustmentX(),
+                                                 (float)mouseEvent.getSceneY() - camera.getAdjustmentY());
                     }
                 }
             }

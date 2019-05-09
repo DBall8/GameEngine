@@ -60,10 +60,10 @@ public abstract class Entity {
     /**
      * Default draw method for drawing the entity, can be overridden if needed
      */
-    public void draw()
+    public void draw(Camera camera)
     {
-        visuals.setTranslateX(x);
-        visuals.setTranslateY(y);
+        visuals.setTranslateX(x + camera.getAdjustmentX());
+        visuals.setTranslateY(y + camera.getAdjustmentY());
         rotate.setAngle(orientation);
     }
 }

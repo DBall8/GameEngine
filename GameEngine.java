@@ -22,8 +22,9 @@ public abstract class GameEngine extends Application {
     private Pane pane; // Pane for adding all visuals
     private Settings settings = new Settings(); // contains all settings for the engine
     private GameTime time; // controls triggering of frames updates
-    protected Scene scene; // Scene that the game is present in
-    protected UserInputHandler userInputHandler = null; // creates bindings between inputs and actions
+    private Scene scene; // Scene that the game is present in
+    private UserInputHandler userInputHandler = null; // creates bindings between inputs and actions
+    private Camera camera; // controls the view of the player
 
     private List<Entity> entities = new ArrayList<>(); // All entities to be drawn
     private List<Entity> additionList = new LinkedList<>(); // list for entities to add on next frame
@@ -46,7 +47,7 @@ public abstract class GameEngine extends Application {
         for(Entity e: entities)
         {
             e.update();
-            e.draw();
+            e.draw(camera);
         }
 
         // Run method that the user can override
@@ -73,9 +74,10 @@ public abstract class GameEngine extends Application {
         // Set up pane and scene
         pane = new Pane();
         scene = new Scene(pane, settings.getWindowWidth(), settings.getWindowHeight());
+        camera = new Camera(settings.getWindowWidth(), settings.getWindowHeight());
 
         // Create user input handler
-        userInputHandler = new UserInputHandler(scene);
+        userInputHandler = new UserInputHandler(scene, camera);
 
         // Run method that the user can override
         onStart();
@@ -199,6 +201,7 @@ public abstract class GameEngine extends Application {
     public void setWindowWidth(int windowWidth)
     {
         settings.setWindowWidth(windowWidth);
+        if (camera != null) camera.updateWindowSize(windowWidth, settings.getWindowHeight());
     }
 
     /**
@@ -208,6 +211,7 @@ public abstract class GameEngine extends Application {
     public void setWindowHeight(int windowHeight)
     {
         settings.setWindowHeight(windowHeight);
+        if (camera != null) camera.updateWindowSize(settings.getWindowWidth(), windowHeight);
     }
 
     /**
@@ -238,4 +242,8 @@ public abstract class GameEngine extends Application {
             frameRateText.setFill(color);
         }
     }
+
+    protected UserInputHandler getUserInputHandler(){ return userInputHandler; }
+    protected Camera getCamera(){ return camera; }
+    protected Scene getScene(){ return scene; }
 }
