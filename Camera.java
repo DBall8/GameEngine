@@ -47,7 +47,7 @@ public class Camera {
         return ypos;
     }
 
-    public void updateWindowSize(int windowWidth, int windowHeight)
+    void updateWindowSize(int windowWidth, int windowHeight)
     {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
