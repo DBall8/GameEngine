@@ -1,5 +1,6 @@
 package gameEngine;
 
+import gameEngine.callback.Callback;
 import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
 import javafx.event.EventHandler;
@@ -131,6 +132,7 @@ public abstract class GameEngine extends Application {
     {
         for(Entity entity: additionList)
         {
+            entity.setCamera(camera);
             add(entity);
         }
         additionList.clear();
@@ -152,13 +154,13 @@ public abstract class GameEngine extends Application {
     protected void onClose(){}
 
     // Could use if desired
-//    public void forEachEntity(Callback<Entity> callback)
-//    {
-//        for(Entity entity: entities)
-//        {
-//            callback.run(entity);
-//        }
-//    }
+    public void forEachEntity(Callback<Entity> callback)
+    {
+        for(Entity entity: entities)
+        {
+            callback.run(entity);
+        }
+    }
 
     /**
      * Adds an Entity to the list of drawn Entities

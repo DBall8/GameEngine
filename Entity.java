@@ -11,6 +11,7 @@ public abstract class Entity {
 
     private Group visuals = new Group(); // Contains all shapes to draw
     private Rotate rotate = new Rotate(0, 0, 0); // Used to rotate the visuals
+    private Camera camera;
     protected float x = 0; // x coordinate
     protected float y = 0; // y coordinate
     protected float orientation = 0; // angle (in degrees)
@@ -65,5 +66,30 @@ public abstract class Entity {
         visuals.setTranslateX(x + camera.getAdjustmentX());
         visuals.setTranslateY(y + camera.getAdjustmentY());
         rotate.setAngle(orientation);
+    }
+
+    public float getWorldX()
+    {
+        return x;
+    }
+
+    public float getWorldY()
+    {
+        return y;
+    }
+
+    public float getScreenX()
+    {
+        return x + camera.getAdjustmentX();
+    }
+
+    public float getScreenY()
+    {
+        return y + camera.getAdjustmentY();
+    }
+
+    void setCamera(Camera camera)
+    {
+        this.camera = camera;
     }
 }
