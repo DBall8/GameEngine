@@ -63,9 +63,14 @@ public abstract class Entity {
      */
     public void draw(Camera camera)
     {
-        visuals.setTranslateX(x + camera.getAdjustmentX());
-        visuals.setTranslateY(y + camera.getAdjustmentY());
-        rotate.setAngle(orientation);
+//        boolean visibleX = Math.abs(camera.getCameraX() - x) < camera.getRenderDistance();
+//        boolean visibleY = Math.abs(camera.getCameraY() - y) < camera.getRenderDistance();
+//
+//        if(visibleX && visibleY) {
+            visuals.setTranslateX(x + camera.getAdjustmentX());
+            visuals.setTranslateY(y + camera.getAdjustmentY());
+            rotate.setAngle(orientation);
+//        }
     }
 
     public float getWorldX()

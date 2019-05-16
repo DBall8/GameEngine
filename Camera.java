@@ -1,11 +1,15 @@
 package gameEngine;
 
 public class Camera {
+    private final static int DEFAUL_RENDER_DISTANCE = 2000;
+
     private int xpos;
     private int ypos;
 
     private int windowWidth;
     private int windowHeight;
+
+    private int renderDistance = DEFAUL_RENDER_DISTANCE;
 
     public Camera(int windowWidth, int windowHeight)
     {
@@ -52,4 +56,7 @@ public class Camera {
         this.windowWidth = windowWidth;
         this.windowHeight = windowHeight;
     }
+
+    public void setRenderDistance(int renderDistance){ this.renderDistance = renderDistance; }
+    int getRenderDistance(){ return renderDistance; }
 }
