@@ -2,7 +2,6 @@ package gameEngine.userInput;
 
 import gameEngine.callback.Callback;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 
 /**
  * Class for tracking if a keyboard key is currently pressed or not
