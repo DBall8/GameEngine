@@ -42,7 +42,7 @@ public class YourGame extends GameEngine {
     }
     
     @Override
-    protected void onUpdateStart()
+    protected void onUpdateFinish()
     {
         // Code here is called on every frame of the game, after entities are moved and drawn
     }
