@@ -4,9 +4,12 @@ import gameEngine.callback.Callback;
 import gameEngine.userInput.UserInputHandler;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -20,7 +23,8 @@ import java.util.List;
  */
 public abstract class GameEngine extends Application {
 
-    private Pane pane; // Pane for adding all visuals
+    private Group normalVisuals = new Group();  // Group for all regular visuals
+    private Group debugVisuals = new Group();   // Group for debug visuals, always on top of normal visuals
     private Settings settings = new Settings(); // contains all settings for the engine
     private GameTime time; // controls triggering of frames updates
     private Scene scene; // Scene that the game is present in
@@ -73,7 +77,7 @@ public abstract class GameEngine extends Application {
         onInitialize();
 
         // Set up pane and scene
-        pane = new Pane();
+        Pane pane = new Pane();
         scene = new Scene(pane, settings.getWindowWidth(), settings.getWindowHeight());
         camera = new Camera(settings.getWindowWidth(), settings.getWindowHeight());
 
@@ -87,6 +91,9 @@ public abstract class GameEngine extends Application {
             frameRateText = new Text(settings.getWindowWidth() - 40, 40, "0");
             pane.getChildren().add(frameRateText);
         }
+
+        pane.getChildren().add(normalVisuals);
+        pane.getChildren().add(debugVisuals);
 
         // Set up close event
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -111,7 +118,7 @@ public abstract class GameEngine extends Application {
      */
     private void add(Entity entity)
     {
-        pane.getChildren().add(entity.getVisuals());
+        normalVisuals.getChildren().add(entity.getVisuals());
         entities.add(entity);
     }
 
@@ -121,7 +128,7 @@ public abstract class GameEngine extends Application {
      */
     private void remove(Entity entity)
     {
-        pane.getChildren().remove(entity.getVisuals());
+        normalVisuals.getChildren().remove(entity.getVisuals());
         entities.remove(entity);
     }
 
@@ -248,4 +255,16 @@ public abstract class GameEngine extends Application {
     protected UserInputHandler getUserInputHandler(){ return userInputHandler; }
     protected Camera getCamera(){ return camera; }
     protected Scene getScene(){ return scene; }
+
+    // For debugging
+    public void addDebugVisual(Node n)
+    {
+        debugVisuals.getChildren().add(n);
+    }
+
+    public void clearDebugVisuals()
+    {
+        debugVisuals.getChildren().clear();
+    }
+
 }
